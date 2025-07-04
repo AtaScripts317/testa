@@ -48,7 +48,7 @@
         document.getElementById('info').style.display = 'block';
 
         // Send to backend API
-        await fetch('/api/send-to-webhook', {
+        await fetch('/api/send-to-webhook.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
