@@ -3,9 +3,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const data = req.body;
+  console.log('Request body:', req.body);
+  console.log('Webhook URL:', process.env.WEBHOOK_URL);
 
-  const webhookURL = process.env.WEBHOOK_URL;
+  if (!process.env.WEBHOOK_URL) {
+    console.error('WEBHOOK_URL env variable is not defined!');
+    return res.status(500).json({ error: 'Webhook URL not configured' });
+  }
+
+  const data = req.body;
 
   const message = {
     embeds: [
@@ -31,7 +37,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    const response = await fetch(webhookURL, {
+    const response = await fetch(process.env.WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(message)
@@ -41,9 +47,9 @@ export default async function handler(req, res) {
       throw new Error(`Discord HTTP error! status: ${response.status}`);
     }
 
-    res.json({ success: true });
+    return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error sending to webhook:", error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 }
