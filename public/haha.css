@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin:15px;
+    margin: 15px;
     background-color: black;
     color: white;
     display: flex;
@@ -8,6 +8,28 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
+}
+
+#info {
+    display: none;
+    text-align: center;
+    color: white;
+}
+
+#info p {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 3s steps(40) 0.5s forwards;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 #enter {
@@ -24,28 +46,5 @@ body {
     }
     to {
         text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff;
-    }
-}
-
-#info {
-    display: none;
-    text-align: center;
-    color: transparent;
-}
-
-#info p {
-    display: inline-block;
-    overflow: hidden; 
-    white-space: nowrap;
-    animation: typing 3s steps(40) 0.5s forwards;
-}
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-        color: white;
     }
 }
