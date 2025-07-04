@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ata.xyz</title>
+  <link rel="stylesheet" href="haha.css">
 </head>
-<body>
+<body id="main-body">
   <div id="enter">click to enter</div>
   <div id="info" style="display: none;">
     <p><strong>IP Address:</strong> <span id="ip"></span></p>
@@ -19,9 +20,12 @@
     <p><strong>UserAgent:</strong> <span id="useragent"></span></p>
   </div>
 
+  <audio id="audio" src="background-music.mp3"></audio>
+
   <script>
     document.getElementById('enter').addEventListener('click', async function() {
       this.style.display = 'none';
+      document.getElementById('audio').play();
       await fetchUserInfo();
     });
 
